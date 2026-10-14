@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://digigrowth-backend-1.onrender.com/api";
+  process.env.NEXT_PUBLIC_API_URL || "https://digigrowth-backend-1.onrender.com";
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
