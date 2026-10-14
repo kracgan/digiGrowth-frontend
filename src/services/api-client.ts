@@ -1,7 +1,12 @@
 import axios, { AxiosError } from "axios";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://digigrowth-backend-1.onrender.com";
+const rawBaseUrl =
+  process.env.NEXT_PUBLIC_API_URL || "https://digigrowth-backend-1.onrender.com/api";
+
+const cleanBaseUrl = rawBaseUrl.replace(/\/+$/, "");
+const API_BASE_URL = cleanBaseUrl.endsWith("/api")
+  ? cleanBaseUrl
+  : `${cleanBaseUrl}/api`;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
