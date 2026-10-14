@@ -1,12 +1,18 @@
 import axios, { AxiosError } from "axios";
 
-const rawBaseUrl =
-  process.env.NEXT_PUBLIC_API_URL || "https://digigrowth-backend-1.onrender.com/api";
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    const clean = process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "");
+    return clean.endsWith("/api") ? clean : `${clean}/api`;
+  }
+  // In browser, using relative /api completely eliminates any CORS and cookie-blocking issues
+  if (typeof window !== "undefined") {
+    return "/api";
+  }
+  return "https://digigrowth-backend-1.onrender.com/api";
+};
 
-const cleanBaseUrl = rawBaseUrl.replace(/\/+$/, "");
-const API_BASE_URL = cleanBaseUrl.endsWith("/api")
-  ? cleanBaseUrl
-  : `${cleanBaseUrl}/api`;
+const API_BASE_URL = getBaseUrl();
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
